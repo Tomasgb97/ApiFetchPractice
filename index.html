@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="./stylesheet.css">
     <title>Api giphy</title>
 </head>
+
 <body>
 
     <h1>GiFinder</h1>
@@ -20,43 +22,29 @@
         let actualValue;
         const img = document.querySelector('img');
 
-        
-        fetch('https://api.giphy.com/v1/gifs/translate?api_key=zaBjjZCFtFYKYmVRTX04yDINR02yZr2O&s=cats', {mode: 'cors'})
-        .then(function(response) {
-
-            return (response.json());
-        })
-        .then(function(response) {
-
+        async function getGif(){
+        const resp = await fetch(`https://api.giphy.com/v1/gifs/translate?api_key=zaBjjZCFtFYKYmVRTX04yDINR02yZr2O&s=${actualValue}`, { mode: 'cors' })
+            
+        resp.json()
+        .then(function(response){
             img.src = response.data.images.original.url;
-        });
+        })
 
+        }
+
+        getGif();
 
         const refresh = document.getElementById('refresh');
 
-        refresh.addEventListener('click', function(){
+        refresh.addEventListener('click', getGif)
 
-        const img = document.querySelector('img');
-
-        fetch(`https://api.giphy.com/v1/gifs/translate?api_key=zaBjjZCFtFYKYmVRTX04yDINR02yZr2O&s=${actualValue}`, {mode: 'cors'})
-
-        .then(function(response) {
-
-            return (response.json());
-        })
-        .then(function(response) {
-
-            img.src = response.data.images.original.url;
-        }).catch(error => console.log(error));
-        })
-    
-    
         const searchBar = document.getElementById('searchbar');
 
-        searchBar.addEventListener('input', function(){
+        searchBar.addEventListener('input', function () {
 
             actualValue = searchBar.value;
         })
     </script>
 </body>
+
 </html>
